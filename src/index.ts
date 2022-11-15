@@ -97,7 +97,7 @@ app.put('/videos/:id', (req: Request, res: Response) => {
         res.status(400).send(validationResult);
         return;
     }
-    db.videos.push(newVideo);
+    db.videos[video.id] = newVideo;
     res.send(204);
 });
 app.delete('/videos/:id', (req: Request, res: Response) => {
