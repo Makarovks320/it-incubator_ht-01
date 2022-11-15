@@ -63,9 +63,17 @@ app.get('/', (req: Request, res: Response) => {
 app.get('/videos', (req: Request, res: Response) => {
     res.status(200).send(db.videos);
 });
+app.get('/videos/:id', (req: Request, res: Response) => {
+    const video = db.videos.find(v => v.id === +req.params.id);
+    if (video) {
+        res.status(200).send(video);
+    } else {
+        res.send(404);
+    }
+});
 app.delete('/testing/all-data', (req: Request, res: Response) => {
     db.videos = [];
-    res.status(204).send();
+    res.send(204);
 });
 app.post('/videos', (req: Request, res: Response) => {
     const newVideo: video = makeVideoItem(req.body);
