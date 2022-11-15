@@ -12,7 +12,7 @@ export function makeVideoItem (v: video, id?: number): video {
         author: v.author,
         canBeDownloaded: v.canBeDownloaded || false,
         minAgeRestriction: v.minAgeRestriction || null,
-        createdAt: v.createdAt || createdDate.toISOString(),
+        createdAt: id ? v.createdAt : createdDate.toISOString(),
         publicationDate: v.publicationDate || publicatedDate.toISOString(),
         availableResolutions: v.availableResolutions || null
     };
