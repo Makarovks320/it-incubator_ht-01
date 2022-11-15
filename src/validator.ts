@@ -22,7 +22,7 @@ export function validateVideo(video: video): errorsList {
                 field: 'title'
             })
         }
-        if (video.title.length > 20) {
+        if (video.title.length > 40) {
             result.errorsMessages.push({
                 message: 'Max length',
                 field: 'title'
@@ -40,6 +40,12 @@ export function validateVideo(video: video): errorsList {
             result.errorsMessages.push({
                 message: 'field is empty',
                 field: 'author'
+            })
+        }
+        if (video.author.length > 20) {
+            result.errorsMessages.push({
+                message: 'Max length',
+                field: 'title'
             })
         }
     }
