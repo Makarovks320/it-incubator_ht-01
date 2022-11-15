@@ -65,7 +65,7 @@ app.get('/videos', (req: Request, res: Response) => {
 });
 app.delete('/videos', (req: Request, res: Response) => {
     db.videos = [];
-    res.status(204);
+    res.status(204).send();
 });
 app.post('/videos', (req: Request, res: Response) => {
     const newVideo: video = makeVideoItem(req.body);
