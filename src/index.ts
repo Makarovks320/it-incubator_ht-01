@@ -85,6 +85,31 @@ app.post('/videos', (req: Request, res: Response) => {
     db.videos.push(newVideo);
     res.status(201).send(newVideo);
 });
+app.put('/videos/:id', (req: Request, res: Response) => {
+    const video = db.videos.find(v => v.id === +req.params.id);
+    if (!video) {
+        res.send(404).send(video);
+        return;
+    }
+    const newVideo: video = makeVideoItem(req.body);
+    const validationResult = validateVideo(newVideo);
+    if(validationResult.errorsMessages.length > 0) {
+        res.status(400).send(validationResult);
+        return;
+    }
+    db.videos.push(newVideo);
+    res.send(204);
+});
+app.delete('/videos/:id', (req: Request, res: Response) => {
+    const id = +req.params.id;
+    const video = db.videos.find(v => v.id === id);
+    if (!video) {
+        res.send(404).send(video);
+        return;
+    }
+    db.videos.filter(v => v.id !== id);
+    res.send(204);
+});
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 });
