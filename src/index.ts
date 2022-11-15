@@ -107,7 +107,7 @@ app.delete('/videos/:id', (req: Request, res: Response) => {
         res.send(404).send(video);
         return;
     }
-    db.videos.filter(v => v.id !== id);
+    db.videos = db.videos.filter(v => v.id !== id);
     res.send(204);
 });
 app.listen(port, () => {
