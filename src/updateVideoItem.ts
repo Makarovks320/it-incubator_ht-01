@@ -8,7 +8,7 @@ export function updateVideoItem (oldV: video, newV: video): video {
         canBeDownloaded: newV.canBeDownloaded || oldV.canBeDownloaded,
         minAgeRestriction: newV.minAgeRestriction || oldV.minAgeRestriction,
         createdAt: oldV.createdAt,
-        publicationDate: oldV.publicationDate,
+        publicationDate: newV.publicationDate || oldV.publicationDate,
         availableResolutions: newV.availableResolutions || oldV.availableResolutions
     };
 }
