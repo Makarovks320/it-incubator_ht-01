@@ -85,5 +85,14 @@ export function validateVideo(video: video): errorsList {
             }
         })
     }
+
+    if (video.publicationDate) {
+        if (video.publicationDate.length !== 24) {
+            result.errorsMessages.push({
+                message: 'ISO format required',
+                field: 'publicationDate'
+            })
+        }
+    }
     return result;
 }
