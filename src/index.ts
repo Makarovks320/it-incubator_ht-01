@@ -1,6 +1,7 @@
 import express, {Request, Response} from "express";
 import {validateVideo} from "./validator";
 import {makeVideoItem} from "./makeVideoItem";
+import {updateVideoItem} from "./updateVideoItem";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -88,7 +89,13 @@ app.post('/videos', (req: Request, res: Response) => {
 });
 app.put('/videos/:id', (req: Request, res: Response) => {
     const id = +req.params.id;
-    let video = db.videos.find(v => v.id === id);
+    let index = 0; //чтобы интерпретатор не жаловался, все равно id переопределится, если видео существует
+    let video = db.videos.find((v, i) => {
+        if (v.id === id) {
+            index = i;// порядковый номер найденного видео
+            return true;
+        }
+    });
     if (!video) {
         res.send(404).send(video);
         return;
@@ -99,10 +106,7 @@ app.put('/videos/:id', (req: Request, res: Response) => {
         res.status(400).send(validationResult);
         return;
     }
-    // удаляем старое видео
-    db.videos = db.videos.filter(v => v.id !== id);
-    // вставляем новое
-    db.videos.push(newVideo);
+    db.videos[index] = updateVideoItem(db.videos[index], newVideo);
     res.send(204);
 });
 app.delete('/videos/:id', (req: Request, res: Response) => {
