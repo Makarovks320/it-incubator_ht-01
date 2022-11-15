@@ -75,7 +75,7 @@ app.post('/videos', (req: Request, res: Response) => {
         return;
     }
     db.videos.push(newVideo);
-    res.status(200).send(newVideo);
+    res.status(201).send(newVideo);
 });
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
