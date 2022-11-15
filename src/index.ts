@@ -63,7 +63,7 @@ app.get('/', (req: Request, res: Response) => {
 app.get('/videos', (req: Request, res: Response) => {
     res.status(200).send(db.videos);
 });
-app.delete('/videos', (req: Request, res: Response) => {
+app.delete('/testing/all-data', (req: Request, res: Response) => {
     db.videos = [];
     res.status(204).send();
 });
