@@ -22,6 +22,12 @@ export function validateVideo(video: video): errorsList {
                 field: 'title'
             })
         }
+        if (video.title.length > 40) {
+            result.errorsMessages.push({
+                message: 'Max length',
+                field: 'title'
+            })
+        }
     }
 
     if (typeof video.author !== 'string') {
