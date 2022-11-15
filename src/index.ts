@@ -18,6 +18,7 @@ enum Resolution {
     P1440 = 'P1440',
     P2160 = 'P2160'
 }
+
 export type video = {
     id: number,
     title: string,
@@ -40,7 +41,7 @@ const db: { videos: video[] } = {
             minAgeRestriction: null,
             createdAt: "2022-11-15T13:08:40.365Z",
             publicationDate: "2022-11-15T13:08:40.365Z",
-            availableResolutions: [ Resolution.P144 ]
+            availableResolutions: [Resolution.P144]
         },
         {
             id: 1,
@@ -78,7 +79,7 @@ app.delete('/testing/all-data', (req: Request, res: Response) => {
 app.post('/videos', (req: Request, res: Response) => {
     const newVideo: video = makeVideoItem(req.body);
     const validationResult = validateVideo(newVideo);
-    if(validationResult.errorsMessages.length > 0) {
+    if (validationResult.errorsMessages.length > 0) {
         res.status(400).send(validationResult);
         return;
     }
@@ -86,18 +87,22 @@ app.post('/videos', (req: Request, res: Response) => {
     res.status(201).send(newVideo);
 });
 app.put('/videos/:id', (req: Request, res: Response) => {
-    const video = db.videos.find(v => v.id === +req.params.id);
+    const id = +req.params.id;
+    let video = db.videos.find(v => v.id === id);
     if (!video) {
         res.send(404).send(video);
         return;
     }
-    const newVideo: video = makeVideoItem(req.body);
+    const newVideo = makeVideoItem(req.body, video.id);
     const validationResult = validateVideo(newVideo);
-    if(validationResult.errorsMessages.length > 0) {
+    if (validationResult.errorsMessages.length > 0) {
         res.status(400).send(validationResult);
         return;
     }
-    db.videos[video.id] = newVideo;
+    // удаляем старое видео
+    db.videos = db.videos.filter(v => v.id !== id);
+    // вставляем новое
+    db.videos.push(newVideo);
     res.send(204);
 });
 app.delete('/videos/:id', (req: Request, res: Response) => {
