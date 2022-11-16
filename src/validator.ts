@@ -12,7 +12,7 @@ const Resolution = ['P144', 'P240', 'P360', 'P480', 'P720', 'P1080', 'P1440', 'P
 
 export function validateVideo(video: video): errorsList {
     const result: errorsList = {errorsMessages: []};
-    if (typeof video.title !== 'string') {
+    if (video.title && typeof video.title !== 'string') {
         result.errorsMessages.push({
             message: 'incorrect type',
             field: 'title'
@@ -32,7 +32,7 @@ export function validateVideo(video: video): errorsList {
         }
     }
 
-    if (typeof video.author !== 'string') {
+    if (video.author && typeof video.author !== 'string') {
         result.errorsMessages.push({
             message: 'incorrect type',
             field: 'author'
